@@ -7,12 +7,12 @@ class Operation:
         self.numbers = numbers
 
 def introduction():
-    print("Python Calculator")
+    print("=== PYTHON CALCULATOR ===\n\n")
 
 def print_instructions():
     instructions = "Type your command in this format: "
-    instructions += " add 1, 2"
-    instructions += " Possible operations: add, subtract, multiply, divide"
+    instructions += "add 1, 2\n"
+    instructions += " Possible operations: add, subtract, multiply, divide\n"
     print(instructions)
 
 def get_user_input():
@@ -29,12 +29,13 @@ def parse_input(user_input):
     #["add", "30,50"]
  # Make list of numbers that is easy to work with 
     user_input_numbers = user_input_parsed[1].split(",")
+    user_input_numbers_int = []
     #["30, "50"]
     for number in user_input_numbers:
-        number = int(number)
+       user_input_numbers_int.append(int(number))
         #[30,50]
  # Create instance of operation class 
-    operation = Operation(user_input_parsed[0], user_input_numbers)
+    operation = Operation(user_input_parsed[0], user_input_numbers_int)
     return operation
 
 def run_operation(task):
@@ -72,23 +73,30 @@ def run_operation(task):
     
 
 def answer_user(solution):
-    answer ="Your answer is: "
-    answer += solution
-    return answer
+    answer ="\nYour answer is: "
+    answer += str(solution)
+    answer += "\n" #or can put the \n before "Would in the next function"
+    print(answer)
 
 def ask_again():
-    again = input("Would you like to enter another command?: ")
+    again = input("Would you like to enter another command?: ").lower()
     # If yes return true
-    if again == "yes":
+    if again[0] == "y":
         return True
-    if again == "no":
     #If no return false
-
+    if again[0] == "n":
+        sys.exit()
+    
 def main():
-    pass
+    
 
-#main()
+    while True:
+        introduction()
+        print_instructions()
+        user_input = get_user_input()
+        operation = parse_input(user_input)
+        answer = run_operation(operation)
+        answer_user(answer)
+        ask_again()
 
-operation = Operation("add", [30,50,20])
-answer = run_operation(operation)
-print(answer)
+main()
